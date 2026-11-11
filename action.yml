@@ -171,7 +171,7 @@ runs:
         # every run, so the fallback matches on what is actually knowable --
         # a marker comment written by a bot. Pull request participants are
         # Users, never Bots, so the marker is still not enough on its own.
-        author=$(gh api user --jq '.login' 2>/dev/null || true)
+        if ! author=$(gh api user --jq '.login' 2>/dev/null); then author=''; fi
         if [ -n "${author}" ]; then
           author_filter=".user.login == \"${author}\""
         else
